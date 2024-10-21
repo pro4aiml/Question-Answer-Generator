@@ -1,5 +1,4 @@
-langchain
-langchain-openai
-rich
-python-dotenv
-langchain_ollama
+langchain==0.3.4
+langchain-openai==0.2.3
+python-dotenv==1.0.1
+langchain_ollama==0.2.0

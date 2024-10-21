@@ -5,6 +5,8 @@ from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
 from langchain.evaluation.qa import QAGenerateChain
 from dotenv import load_dotenv
+import utils
+
 load_dotenv()
 
 if not os.environ.get("OPENAI_API_KEY"):
@@ -27,9 +29,17 @@ llm = ChatOpenAI(
     max_retries=2,
 )
 
-qa = QAGenerateChain.from_llm(llm)
+qa = QAGenerateChain.from_llm(ollm)
 
 resp = qa.invoke(text)
 
 print(resp['qa_pairs']['query'], "\n")
 print(resp['qa_pairs']['answer'], "\n")
+
+data = f"### Question: {resp['qa_pairs']['query']}\n ### Answer: {resp['qa_pairs']['answer']}"
+print(data)
+
+# Writing data to csv file
+filename = "data.csv"
+utils.disk_output(data, filename)
+
