@@ -1,13 +1,9 @@
-import json, csv
+import csv
 
 def disk_output(data, filename):
-    with open(filename, mode='w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=["Question", "Answer"])
+    with open(filename, mode='w') as csv_file:  
+        writer = csv.writer(csv_file)
+        writer.writerow(data.keys())
+        writer.writerow(data.values())
 
-        # Write the header
-        writer.writeheader()
-
-        for row in data:
-                writer.writerow(row)
-                
     print(f"{filename} has been created.")

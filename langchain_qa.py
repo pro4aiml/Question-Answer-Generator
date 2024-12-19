@@ -19,9 +19,12 @@ ruggedness, and longevity - essential traits for HMI and control products.
 Comark's products undergo rigorous testing and certification to ensure optimal performance in challenging environments and extreme conditions.
 """
 
-ollm = OllamaLLM(model="Llama3.2", temperature=0.2)
+llama_llm = OllamaLLM(
+    model="Llama3.2", 
+    temperature=0.2
+)
 
-llm = ChatOpenAI(
+openai_llm = ChatOpenAI(
     model= "gpt-4o",
     temperature=0,
     max_tokens=None,
@@ -29,17 +32,18 @@ llm = ChatOpenAI(
     max_retries=2,
 )
 
-qa = QAGenerateChain.from_llm(ollm)
+
+# Choose LLM to generate pairs
+llm = llama_llm
+
+qa = QAGenerateChain.from_llm(llm)
 
 resp = qa.invoke(text)
 
-print(resp['qa_pairs']['query'], "\n")
-print(resp['qa_pairs']['answer'], "\n")
-
-data = f"### Question: {resp['qa_pairs']['query']}\n ### Answer: {resp['qa_pairs']['answer']}"
-print(data)
+pairs = resp['qa_pairs']
 
 # Writing data to csv file
+# To be used with dataset csv function
 filename = "data.csv"
-utils.disk_output(data, filename)
+utils.disk_output(pairs, filename)
 
